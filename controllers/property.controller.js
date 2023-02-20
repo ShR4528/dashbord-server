@@ -29,8 +29,7 @@ const getAllProperties = async (req, res) => {
     try {
         const count = await Property.countDocuments({ query });
 
-        const properties = await Property
-            .find(query)
+        const properties = await Property.find(query)
             .limit(_end)
             .skip(_start)
             .sort({ [_sort]: _order });
@@ -49,7 +48,7 @@ const getAllProperties = async (req, res) => {
 
 };
 const getPropertyDetail = async (req, res) => {
-    const { id } = res.params;
+    const { id } = req.params;
     const propertyExists = await Property.findOne({ _id: id }).populate('creator');
 
     if (propertyExists) {
