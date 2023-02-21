@@ -1,6 +1,15 @@
 import User from '../mongodb/models/user.js';
 
-const getAllUsers = async (req, res) => { };
+const getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find({}).limit(req.query._end);
+
+        res.status(200).json(users);
+
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
 
 
 const createUsers = async (req, res) => {
@@ -14,11 +23,11 @@ const createUsers = async (req, res) => {
 
         const newUser = await User.create({
             name, email, avatar,
-        })
-        res.status(200).json(newUser)
+        });
+        res.status(200).json(newUser);
 
     } catch (error) {
-        res.status(500).json({ message: error.message })
+        res.status(500).json({ message: error.message });
     }
 };
 
@@ -29,4 +38,4 @@ export {
     getAllUsers,
     createUsers,
     getUserInfoById
-}
+};
